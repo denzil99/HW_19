@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HW19.Data.Models
 {
@@ -14,8 +9,8 @@ namespace HW19.Data.Models
 		[Column("content")]
 		public string Content { get; set; }
 		[Column("sender_id")]
-		public string SenderId { get; set; }
+		public int SenderId { get; set; }
 		[Column("reciept_id")]
-		public string RecieptId { get; set; }
+		public int RecieptId { get; set; }
 	}
 }
