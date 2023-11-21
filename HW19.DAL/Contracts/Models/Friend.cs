@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HW19.Data.Models
+namespace HW19.Dal.Contracts.Models
 {
 	public class Friend
 	{
