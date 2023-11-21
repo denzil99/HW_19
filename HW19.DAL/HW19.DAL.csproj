@@ -21,4 +21,10 @@
     <ProjectReference Include="..\HW19.Data\HW19.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DB\social_network_bd.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using HW19.BLL.Services;
+﻿using HW19.BLL.Contracts;
+using HW19.BLL.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,16 +26,14 @@ namespace HW_19
 				})
 				.ConfigureLogging((host, logging) =>
 				{
-					
+
 				})
 				.ConfigureServices((hostContext, services) =>
 				{
 					try
 					{
 						services.AddHostedService<InitializationService>();
-						services.AddScoped<IReportsReaderService, ReportsReaderService>();
-						services.AddScoped<ITransferFilesServise, TransferFilesServise>();
-						services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("name=ConnectionStrings:DefaultConnection"));
+						services.AddScoped<IUserInterfaceService, UserInterfaceService>();
 					}
 					catch (Exception)
 					{

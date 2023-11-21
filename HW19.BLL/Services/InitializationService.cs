@@ -1,12 +1,6 @@
 ﻿using HW19.BLL.Contracts;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HW19.BLL.Services
 {
@@ -15,7 +9,6 @@ namespace HW19.BLL.Services
 		#region Data
 		private readonly IHostApplicationLifetime _appLifetime;
 		private readonly IServiceProvider _serviceProvider;
-
 		#endregion
 
 		#region .ctor
@@ -31,61 +24,44 @@ namespace HW19.BLL.Services
 		#endregion
 
 		#region Public
-
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			//var date = DateTime.Today.AddDays(-1);
-
-			//var readDirection = _configuration.GetValue<string>("ReadDirection");
-			//var archiveDirection = _configuration.GetValue<string>("ArchiveDirection");
-
-			//var raporMasterovDirection = _configuration.GetValue<string>("RaporttMasterovDirection");
-			//var planProizvodstvaDirection = _configuration.GetValue<string>("PlanProizvodstvaDirection");
-
-
-			_appLifetime.ApplicationStarted.Register(() =>
+			Console.WriteLine("__________________________");
+			try
 			{
-				Task.Run(async () =>
-				{
-					try
+				_appLifetime.ApplicationStarted.Register(() =>
 					{
-						using IServiceScope scope = _serviceProvider.CreateScope();
-
-						IUserService reportsReaderService = scope.ServiceProvider.GetRequiredService<IUserService>();
-						IMessageService transferFilesServise = scope.ServiceProvider.GetRequiredService<IMessageService>();
-
-						Console.WriteLine("Войти в профиль (нажмите 1)");
-						Console.WriteLine("Зарегистрироваться (нажмите 2)");
-
-						switch (Console.ReadLine())
+						Task.Run(async () =>
 						{
-							case "1":
-								{
-									Console.WriteLine("Введите почтовый адрес:");
+							try
+							{
+								// Да, через вьюхи это определенно делается проще
+								// Но у самурая нет цели, есть только путь
+								// Ну а если серьёзно, то на работе используем слоёную архитектуру, и нужно было
+								// дополнительно попрактиковаться с DI
+								// По факту особо и не вышло
+								using IServiceScope scope = _serviceProvider.CreateScope();
 
-									break;
-								}
+								IUserInterfaceService userInterfaceService = scope.ServiceProvider.GetRequiredService<IUserInterfaceService>();
 
-							case "2":
-								{
-									Program.registrationView.Show();
-									break;
-								}
-						}
+								await userInterfaceService.Run();
+							}
+							catch (Exception)
+							{
+								throw;
+							}
+							finally
+							{
+								_appLifetime.StopApplication();
+							}
+						});
+					});
+			}
+			catch (Exception)
+			{
 
-					}
-					catch (Exception ex)
-					{
-						throw;
-					}
-					finally
-					{
-						// Stop the application once the work is done
-						_appLifetime.StopApplication();
-					}
-				});
-			});
-
+				throw;
+			}
 			return Task.CompletedTask;
 		}
 

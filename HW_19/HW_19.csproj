@@ -16,4 +16,10 @@
     <ProjectReference Include="..\HW19.BLL\HW19.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
